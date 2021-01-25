@@ -5,12 +5,13 @@ unsigned long oldTimer; //przechowuje stan licznika
 
 void setup() {
   //Serial.begin(57600);
-  oneWireSetup();
+  //oneWireSetup();
   setupWire();
 }
 
 void loop() {
 
+/*
   unsigned long currentTimer;
   currentTimer = millis();
   
@@ -23,6 +24,6 @@ void loop() {
   }else if (currentTimer - oldTimer < 0){ //przypadek kiedy licznik sie przekrecil
    oldTimer = currentTimer;
   }
-
+*/
 
 }

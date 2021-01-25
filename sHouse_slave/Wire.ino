@@ -8,6 +8,8 @@ Wire.onRequest(requestEvent); // register event
 // function that executes whenever data is requested by master
 // this function is registered as an event, see setup()
 void requestEvent() {
-  Wire.write(temperature[0].b, 4); // respond with message of 4 bytes
+  //Wire.write(temperature[0].b, 4); // respond with message of 4 bytes
+  temperature[0].val = 44;
+  Wire.write(temperature[0].b, 4);
   // as expected by master
 }
