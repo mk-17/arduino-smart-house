@@ -10,7 +10,7 @@ WARTOSCI WEJ I WYJ DO ZMIANY !
 
  */
 
-void E18-D80NKSetup() {
+void E18_D80NKSetup() {
   //start serial connection
   //Serial.begin(9600);
   //configure pin2 as an input and enable the internal pull-up resistor
@@ -19,7 +19,7 @@ void E18-D80NKSetup() {
 
 }
 
-void E18-D80NKLoop() {
+void E18_D80NKLoop() {
   //read the pushbutton value into a variable
   int sensorVal = digitalRead(2);
   //print out the value of the pushbutton

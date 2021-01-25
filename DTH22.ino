@@ -1,3 +1,6 @@
+//biblioteka DHT-sensor-library-master
+//do dzialania wymaga Adafruit Unified Sensor Library
+
 #include "DHT.h"
 
 #define DHTTYPE DHT22   // DHT 22  (AM2302)
@@ -37,4 +40,3 @@ void dhtLoop(){
     mqqtSend("outTopic", temp);
   }
 }
-

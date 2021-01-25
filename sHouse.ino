@@ -6,42 +6,47 @@
 
 // Update these with values suitable for your network.
 byte mac[]    = {  0xDE, 0xED, 0xBA, 0xFE, 0xFE, 0xED };
-IPAddress ip(192, 168, 1, 2);
+IPAddress ip(192, 168, 1, 10);
 IPAddress server(192, 168, 1, 91);
 EthernetClient ethClient;
 PubSubClient mqttClient(ethClient);
 /**************** CONFIG ETHERNET END ******************/
 
 
+/*******DEFINE SUBSCRIBED TOPICS***********/
+#define topics_SIZE 2
+const char* topics[topics_SIZE] ={"cmnd/GROUND_FLOOR/STAIRCASE/LIGHT","cmnd/OUTSIDE/TERRACE/LIGHT"};
+
+
 void setup()
 {
   Serial.begin(57600);
   //oneWireSetup();
-  pirSetup();
+  //pirSetup();
   //wireSetup();//komunikacja pomiedzy Arduino
-  dhtSetup();
-  //ethernetSetup();
-
+  //dhtSetup();
   //stairsSetup();
-  displaysSetup();
+  //displaysSetup();
   //rfidSetup();
-  lightSensorSetup();
+  //lightSensorSetup();
+
+  ethernetSetup();
   
 }
 
 void loop(){
   //oneWireLoop();
-  dhtLoop();
+  //dhtLoop();
   
-  pirLoop();
+  //pirLoop();
   
   //wireLoop();
-  //mqttLoop();
+  mqttLoop();
 
   //stairsLoop();
-  displaysLoop();
+  //displaysLoop();
   //rfidLoop();
-  lightSensorLoop();
+  //lightSensorLoop();
 }
 
 int attemptsCount = 5;
@@ -70,14 +75,19 @@ void ethernetSetup(){
   
 }
 
-void mqttCallback(char* topic, uint8_t* payload, uint32_t length) {
+void mqttCallback(char* topic, byte* payload, unsigned int length) {
   Serial.print("Message arrived [");
   Serial.print(topic);
   Serial.print("] ");
   for (int i=0;i<length;i++) {
     Serial.print((char)payload[i]);
   }
-  Serial.println();
+  Serial.println("---");
+  String topicStr(topic);  //convert char array to string here.
+  //i na String mozna uzywac pelnej listy funkcji https://www.arduino.cc/reference/en/language/variables/data-types/stringobject/
+  Serial.println(topicStr);
+  
+  Serial.println(" : koniec komunikatu");
 }
 
 
@@ -91,9 +101,11 @@ void mqttReconnect() {
     // Attempt to connect
     if (mqttClient.connect("arduinoClient")) {
       Serial.println("connected");
+      mqttSubscribeTopics();
     } else {
       Serial.print("failed, rc=");
       Serial.print(mqttClient.state());
+       
       //Serial.println(" try again in 5 seconds");
       // Wait 5 seconds before retrying
       //delay(5000);
@@ -101,11 +113,15 @@ void mqttReconnect() {
   }
 }
 
-void mqttSetup(){
+void mqttSubscribeTopics(){
       // Once connected, publish an announcement...
       //mqttClient.publish("outTopic","hello world");
       // ... and resubscribe
-      mqttClient.subscribe("inTopic");
+      for(int i =0; i<topics_SIZE;i++){
+        mqttClient.subscribe(topics[i]);  
+        Serial.println(topics[i]);
+      }
+            
       //mqttClient.subscribe("outTopic"); //outTopic zdefiniowane jako temat do którego wyzej wpisalem hello world a tutaj odbieram komunikaty
       //mqttClient.publish("outTopic","arduino wysyla do siebie");  
 }
