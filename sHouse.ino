@@ -18,6 +18,7 @@ PubSubClient mqttClient(ethClient);
 const char* topics[topics_SIZE] ={"cmnd/GROUND_FLOOR/STAIRCASE/LIGHT","cmnd/OUTSIDE/TERRACE/LIGHT"};
 
 
+
 void setup()
 {
   Serial.begin(57600);
