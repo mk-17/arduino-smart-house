@@ -23,8 +23,8 @@ void wireLoop() {
   Serial.println(temperature[0].val);
 }
 
-void wireGetFromSlave(int id){
-   Serial.println("Rozpoczynam pobieranie");
+void wireGetFloat(int id){
+  Serial.println("Rozpoczynam pobieranie");
   Wire.requestFrom(id, 4);    // request 4 bytes (a float) from slave device #ID
 
   int i = 0;
@@ -34,4 +34,27 @@ void wireGetFromSlave(int id){
   }
   Serial.print("Pobrana ze slave temp=");
   Serial.println(temperature[0].val);
+}
+
+void wireGetFromSlave(int id){
+  Serial.println(id);
+   Serial.println("Rozpoczynam pobieranie");
+   
+  Wire.requestFrom(id, 6);    // request 6 bytes (a float) from slave device #ID
+
+  while (Wire.available()) { // slave may send less than requested   
+    char c = Wire.read(); // receive a byte as character    
+    Serial.print(c);            
+  }
+   Serial.println(":Koniec Pobierania");
+ // Serial.print("Pobrana ze slave temp=");
+  //Serial.println(temperature[0].val);
+  //Serial.println(temperature[0].b[0]);
+}
+
+void wireSend2Slave(int id){
+    Wire.beginTransmission(id); // transmit to device #ID
+  Wire.write("test");        // sends 4 bytes
+  //Wire.write("1");              // sends one byte  
+  Wire.endTransmission(); 
 }

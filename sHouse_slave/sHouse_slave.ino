@@ -4,7 +4,7 @@ unsigned long oldTimer; //przechowuje stan licznika
 
 
 void setup() {
-  //Serial.begin(57600);
+  Serial.begin(57600);
   //oneWireSetup();
   setupWire();
 }

@@ -23,7 +23,7 @@ void setup()
   Serial.begin(57600);
   //oneWireSetup();
   //pirSetup();
-  //wireSetup();//komunikacja pomiedzy Arduino
+  wireSetup();//komunikacja pomiedzy Arduino
   //dhtSetup();
   //stairsSetup();
   //displaysSetup();
@@ -88,7 +88,9 @@ void mqttCallback(char* topic, byte* payload, unsigned int length) {
   Serial.println(topicStr);
   
   Serial.println(" : koniec komunikatu");
-  wireGetFromSlave(8);
+  //wireGetFromSlave(8);
+  wireGetFloat(8);
+  wireSend2Slave(8);
 }
 
 
